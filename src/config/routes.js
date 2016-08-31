@@ -7,6 +7,8 @@ import { Wrap } from '../routes/main'
 import { Main } from '../routes/main'
 import { Core } from '../routes/core'
 import { Token } from '../routes/token'
+import { Market } from '../routes/market'
+import { MarketAdd } from '../routes/market'
 
 export const routes = () => {
     return (
@@ -17,6 +19,8 @@ export const routes = () => {
                     <IndexRoute component={Main} />
                     <Route path='core' component={Core} />
                     <Route path='token/:module' component={Token} />
+                    <Route path='market' component={Market} />
+                    <Route path='market/add' component={MarketAdd} />
                 </Route>
             </Route>
             <Route path='*' component={NotFound} />
