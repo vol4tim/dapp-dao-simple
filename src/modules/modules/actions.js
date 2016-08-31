@@ -71,7 +71,7 @@ export function marketDealLot(address) {
     return dispatch => {
         helper.getContract('Lot', address).
             then((contract)=>{
-                return tx(contract, 'deal', [])
+                return tx(contract, 'deal', [coinbase()])
             }).
             then((tx)=>{
                 dispatch(flashMessage('tx: '+ tx))
@@ -111,12 +111,9 @@ export function marketRemoveLot(address) {
     }
 }
 
-export function marketApproveToken(token, value) {
-    return (dispatch, getState) => {
-        var state = getState()
-        var market = state.modules.market
-
-        helper.approveToken(market.address, token, value).
+export function lotApprove(lot, token, value) {
+    return dispatch => {
+        helper.approveToken(lot, token, value).
             then((tx)=>{
                 dispatch(flashMessage('tx: '+ tx))
                 return blockchain.subscribeTx(tx)

@@ -5,7 +5,7 @@ import _ from 'lodash'
 import { Page } from '../components/common';
 import { MenuMarket } from '../components/common';
 import { Market } from '../components/market';
-import { marketDealLot, marketRemoveLot, marketApproveToken } from '../../../modules/modules/actions';
+import { marketDealLot, marketRemoveLot, lotApprove } from '../../../modules/modules/actions';
 
 class MarketContainer extends Component {
     render() {
@@ -28,11 +28,11 @@ function mapStateToProps(state, props) {
     }
 }
 function mapDispatchToProps(dispatch) {
-    const actions = bindActionCreators({marketDealLot, marketRemoveLot, marketApproveToken}, dispatch)
+    const actions = bindActionCreators({marketDealLot, marketRemoveLot, lotApprove}, dispatch)
     return {
         removeLot: actions.marketRemoveLot,
         dealLot: actions.marketDealLot,
-        approveToken: actions.marketApproveToken
+        approveLot: actions.lotApprove
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(MarketContainer)

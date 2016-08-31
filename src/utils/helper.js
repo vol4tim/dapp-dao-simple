@@ -86,30 +86,12 @@ export function getInfoMarket(name, address) {
 							sale_quantity: _.toNumber(lot.quantity_sale()),
 							buy_quantity: _.toNumber(lot.quantity_buy()),
 							//approve_quantity: _.toNumber(tokenBuy.getBalance(coinbase(), {from: address})),
-							approve_quantity: _.toNumber(tokenBuy.allowance(coinbase(), address)),
+							approve_quantity: _.toNumber(tokenBuy.allowance(coinbase(), addr)),
 							my: (lot.seller() == coinbase()) ? true : false
 						})
 					} catch (e) {
 						console.log('load lot err token info', e);
 					}
-
-                    /*lots.push({
-                        address: addr,
-                        seller: lot.seller(),
-                        buyer: lot.buyer(),
-                        sale_address: sale,
-                        buy_address: buy,
-                        sale_name: tokenSale.name(),
-                        buy_name: tokenBuy.name(),
-                        //sale_quantity: _.toNumber(lot.quantity_sale()),
-                        //buy_quantity: _.toNumber(lot.quantity_buy()),
-                        sale_quantity: 1,
-                        buy_quantity: 1,
-                        //approve_quantity: _.toNumber(tokenBuy.getBalance(coinbase(), {from: address})),
-                        //approve_quantity: _.toNumber(tokenBuy.allowance(coinbase(), address)),
-                        approve_quantity: 0,
-                        my: (lot.seller() == coinbase()) ? true : false
-                    })*/
                 }
             }
             return {
