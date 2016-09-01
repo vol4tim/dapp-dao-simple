@@ -57,6 +57,8 @@ export function submitMarketAdd(form) {
                 return blockchain.subscribeTx(tx)
             }).
             then(()=>{
+                //TODO: показать форму для апрува
+                //lotApprove(lot, values[0], values[1])
                 //dispatch(updateMarket())
                 dispatch(flashMessage('Лот Добавлен'))
             }).
@@ -119,7 +121,7 @@ export function lotApprove(lot, token, value) {
                 return blockchain.subscribeTx(tx)
             }).
             then(()=>{
-                //dispatch(updateMarket())
+                dispatch(updateMarket())
                 dispatch(flashMessage('Дан доступ'))
             }).
             catch(function(e) {

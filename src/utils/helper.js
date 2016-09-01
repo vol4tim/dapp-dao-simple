@@ -69,11 +69,21 @@ export function getInfoMarket(name, address) {
             var lots = []
             for (var addr = market.first(); addr != 0; addr = market.next(addr)) {
                 var lot = web3Contract(abi, addr)
+                
                 if (!lot.closed()) {
                     var sale = lot.sale()
                     var buy = lot.buy()
                     var tokenSale = web3Contract(tokenAbi, sale)
                     var tokenBuy = web3Contract(tokenAbi, buy)
+
+                    var sale_approve = _.toNumber(tokenSale.allowance(lot.seller(), addr))
+                    var sale_balance = _.toNumber(tokenSale.balanceOf(lot.seller()))
+                    sale_approve = sale_approve > sale_balance ? sale_balance : sale_approve;
+
+                    var buy_approve = _.toNumber(tokenBuy.allowance(coinbase(), addr))
+                    var buy_balance = _.toNumber(tokenBuy.balanceOf(coinbase()))
+                    buy_approve = buy_approve > buy_balance ? buy_balance : buy_approve;
+
 					try {
 						lots.push({
 							address: addr,
@@ -85,8 +95,8 @@ export function getInfoMarket(name, address) {
 							buy_name: tokenBuy.name(),
 							sale_quantity: _.toNumber(lot.quantity_sale()),
 							buy_quantity: _.toNumber(lot.quantity_buy()),
-							//approve_quantity: _.toNumber(tokenBuy.getBalance(coinbase(), {from: address})),
-							approve_quantity: _.toNumber(tokenBuy.allowance(coinbase(), addr)),
+							approve_sale_quantity: sale_approve,
+							approve_buy_quantity: buy_approve,
 							my: (lot.seller() == coinbase()) ? true : false
 						})
 					} catch (e) {

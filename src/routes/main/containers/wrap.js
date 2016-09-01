@@ -13,7 +13,7 @@ class WrapContainer extends Component {
         }
     }
     load(address) {
-        this.props.load(address/*'0x8a5a90d3d62a4449b815643ba8b067d6a3020a62'*/)
+        this.props.load(address)
         this.props.setAddress(address)
     }
     render() {

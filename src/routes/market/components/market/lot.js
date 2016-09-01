@@ -2,6 +2,9 @@ import React, { PropTypes } from 'react'
 
 const Lot = function(props) {
     return <div className="panel panel-default">
+        <div className="panel-heading">
+            Лот: <span className="label label-primary">{props.address}</span>
+        </div>
         <div className="panel-body">
             <div className="row">
                 <div className="col-md-6">
@@ -22,14 +25,22 @@ const Lot = function(props) {
                 </div>
             </div>
         </div>
-        <div className="panel-footer">
+        <div className="panel-footer text-right">
             {!props.my ?
-                props.approve_quantity < props.buy_quantity ?
-                    <button className="btn btn-success" onClick={props.approveToken}>Дать доступ</button>
+                props.approve_sale_quantity < props.sale_quantity ?
+                    <span className="label label-danger">не для продажи, продавец не дал доступ</span>
                     :
-                    <button className="btn btn-success" onClick={props.dealLot}>Купить</button>
+                    props.approve_buy_quantity < props.buy_quantity ?
+                        <button className="btn btn-success" onClick={props.approveLotBuy}>Дать доступ</button>
+                        :
+                        <button className="btn btn-success" onClick={props.dealLot}>Купить</button>
                 :
-                <button className="btn btn-warning" onClick={props.removeLot}>Снять лот</button>
+                <div className="btn-group">
+                    <button className="btn btn-warning" onClick={props.removeLot}>Снять лот</button>
+                    {props.approve_sale_quantity < props.sale_quantity &&
+                        <button className="btn btn-success" onClick={props.approveLotSale}>Дать доступ</button>
+                    }
+                </div>
             }
         </div>
     </div>
@@ -42,9 +53,11 @@ Lot.propTypes = {
     buy_name: PropTypes.string.isRequired,
     buy_address: PropTypes.string.isRequired,
     buy_quantity: PropTypes.number.isRequired,
-    approve_quantity: PropTypes.number.isRequired,
+    approve_sale_quantity: PropTypes.number.isRequired,
+    approve_buy_quantity: PropTypes.number.isRequired,
     my: PropTypes.bool.isRequired,
-    approveToken: PropTypes.func.isRequired,
+    approveLotSale: PropTypes.func.isRequired,
+    approveLotBuy: PropTypes.func.isRequired,
     removeLot: PropTypes.func.isRequired,
     dealLot: PropTypes.func.isRequired
 }
