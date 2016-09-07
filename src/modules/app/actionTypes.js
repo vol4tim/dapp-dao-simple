@@ -1,0 +1,2 @@
+export const SET_ADDRESS = 'APP_SET_ADDRESS'
+export const FLASH_MESSAGE = 'APP_FLASH_MESSAGE'
