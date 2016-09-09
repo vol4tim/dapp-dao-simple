@@ -1,15 +1,4 @@
 import React, { PropTypes, Component } from 'react'
-import { reduxForm } from 'redux-form'
-
-export const fields = [ 'address' ]
-
-const validate = values => {
-    const errors = {};
-    if (!values.address) {
-        errors.address = 'required'
-    }
-    return errors
-};
 
 export default class StartForm extends Component {
     render() {
@@ -19,7 +8,7 @@ export default class StartForm extends Component {
             submitting
         } = this.props
 
-        return <form onSubmit={handleSubmit}>
+        return <form onSubmit={handleSubmit((data)=>this.context.router.push('/app/'+ data.address))}>
             <div className="input-group">
                 <input type="text" className="form-control" placeholder="Адрес DAO" {...address} />
                 <span className="input-group-btn">
@@ -36,15 +25,6 @@ export default class StartForm extends Component {
     }
 }
 
-StartForm.propTypes = {
-    fields: PropTypes.object.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
-    error: PropTypes.string,
-    submitting: PropTypes.bool.isRequired
+StartForm.contextTypes = {
+    router: PropTypes.object.isRequired
 }
-
-export default reduxForm({
-    form: 'StartForm',
-    fields,
-    validate
-})(StartForm)

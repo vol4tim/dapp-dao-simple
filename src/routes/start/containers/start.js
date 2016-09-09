@@ -1,14 +1,17 @@
-import React, { PropTypes, Component } from 'react'
+import { reduxForm } from 'redux-form'
 import { Form } from '../components/start';
+export const fields = [ 'address' ]
 
-export default class StartContainer extends Component {
-    render() {
-        return <div>
-            <Form onSubmit={(data)=>this.context.router.push('/app/'+ data.address)} />
-        </div>
+const validate = values => {
+    const errors = {};
+    if (!values.address) {
+        errors.address = 'required'
     }
-}
+    return errors
+};
 
-StartContainer.contextTypes = {
-    router: PropTypes.object.isRequired
-}
+export default reduxForm({
+    form: 'StartForm',
+    fields,
+    validate
+})(Form)
